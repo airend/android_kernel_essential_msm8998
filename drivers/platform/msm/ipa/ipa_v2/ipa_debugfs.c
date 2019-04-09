@@ -1401,6 +1401,8 @@ static ssize_t ipa_read_msg(struct file *file, char __user *ubuf,
 	int i;
 
 	for (i = 0; i < IPA_EVENT_MAX_NUM; i++) {
+		if ((IPA_MAX_MSG_LEN - cnt) < 0)
+			continue;
 		nbytes = scnprintf(dbg_buff + cnt, IPA_MAX_MSG_LEN - cnt,
 				"msg[%u:%27s] W:%u R:%u\n", i,
 				ipa_event_name[i],
